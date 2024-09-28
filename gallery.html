@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S&P Builders: Gallery</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #ffffff;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        header.scrolled {
+            background-color: #222222;
+        }
+        nav {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+        }
+        .logo {
+            height: 40px;
+            width: auto;
+            transition: opacity 0.3s ease;
+        }
+        .logo-black {
+            display: block;
+        }
+        .logo-gold {
+            display: none;
+        }
+        header.scrolled .logo-black {
+            display: none;
+        }
+        header.scrolled .logo-gold {
+            display: block;
+        }
+        nav a {
+            color: #000000;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 16px;
+            display: inline-block;
+            height: 100%;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+        header.scrolled nav a {
+            color: #ffffff;
+        }
+        nav a span {
+            transition: color 0.3s ease;
+        }
+        nav a:hover span {
+            color: #B59959;
+        }
+        nav a.active {
+            text-decoration: underline;
+            text-decoration-color: #B59959;
+            text-decoration-thickness: 3px;
+        }
+        main {
+            flex-grow: 1;
+            background-color: #ffffff;
+            padding-top: 60px; /* To account for the fixed header */
+        }
+        footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 30px 0;
+            border-top: 2px solid #B59959;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .footer-left {
+            display: flex;
+            align-items: center;
+        }
+        .footer-logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+        }
+        .footer-instagram {
+            color: #B59959;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .footer-menu {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .footer-menu li {
+            margin-left: 20px;
+        }
+        .footer-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgb(56, 56, 56);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="sphome.html" class="logo-link">
+                <img src="/Users/malachihernandez/Desktop/S&P Images/BLACKLOGO.png" alt="S&P Builders Logo" class="logo logo-black">
+                <img src="/Users/malachihernandez/Desktop/S&P Images/GOLDLOGO.png" alt="S&P Builders Logo" class="logo logo-gold">
+            </a>
+            <a href="sphome.html#home" class="nav-link" data-section="home"><span>Home</span></a>
+            <a href="sphome.html#build" class="nav-link" data-section="build"><span>Build With Us</span></a>
+            <a href="sphome.html#properties" class="nav-link" data-section="properties"><span>Available Properties</span></a>
+            <a href="sphome.html#contact" class="nav-link" data-section="contact"><span>Contact</span></a>
+        </nav>
+    </header>
+
+    <main style="background-color: #f5f5f7; padding: 120px 20px 40px;">
+        <div id="galleryCard" style="background-color: white; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden; display: flex; max-width: 1200px; margin: 0 auto; height: 400px; transition: transform 0.5s ease; cursor: pointer;">
+            <div style="flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <h2 style="font-size: 28px; font-weight: bold; color: #000000; margin-bottom: 5px; text-align: center;">624 Mooney Dr.</h2>
+                <p style="font-size: 18px; color: #1d1d1f; margin-bottom: 30px; text-align: center;">Saginaw, TX</p>
+                <a href="#" id="viewGalleryBtn" style="display: inline-block; padding: 10px 20px; border: 2px solid #B59959; border-radius: 25px; text-decoration: none; font-weight: bold;">View Gallery</a>
+            </div>
+            <div style="flex: 1; background-image: url('/Users/malachihernandez/Desktop/S&P Images/MOONEY.png'); background-size: cover; background-position: center;"></div>
+        </div>
+    </main>
+    <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(211, 211, 211, 0.95); z-index: 1000; overflow: auto; opacity: 0; transition: opacity 0.3s ease;">
+        <button id="closeBtn" style="position: fixed; top: 20px; left: 20px; background: none; border: none; font-size: 36px; color: #444; cursor: pointer; z-index: 1001; transition: color 0.3s ease;">✕</button>
+        <div id="galleryContainer" style="display: flex; flex-direction: column; height: 100%; padding: 20px; box-sizing: border-box;">
+            <h2 style="font-size: 28px; font-weight: bold; color: #000000; margin-bottom: 5px; text-align: center; margin-top: 40px;">624 Mooney Dr.</h2>
+            <p style="font-size: 18px; color: #444444; margin-bottom: 20px; text-align: center;">Saginaw, TX</p>
+            <div id="mainImageContainer" style="flex: 1; display: flex; justify-content: center; align-items: center; position: relative; margin-bottom: 20px;">
+                <button id="prevBtn" class="nav-btn" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%);">&#10094;</button>
+                <img id="mainImage" src="" alt="Main gallery image" style="max-width: 95%; max-height: calc(100vh - 300px); object-fit: contain; transition: opacity 0.3s ease;">
+                <button id="nextBtn" class="nav-btn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">&#10095;</button>
+            </div>
+            <div id="thumbnailContainer" style="display: flex; justify-content: center; align-items: center; height: 100px; overflow-x: auto; margin-bottom: 20px;">
+                <!-- Thumbnails will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+    <style>
+        main > div:hover {
+            transform: scale(1.025);
+        }
+        #viewGalleryBtn {
+            color: #000000;
+            transition: color 0.3s ease;
+        }
+        #viewGalleryBtn:hover {
+            color: #B59959;
+        }
+        body.overlay-open {
+            overflow: hidden;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 36px;
+            color: #444;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .nav-btn:hover {
+            color: #B59959;
+        }
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+            filter: brightness(0.7);
+        }
+        .thumbnail.active {
+            filter: brightness(1);
+        }
+        #closeBtn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            font-size: 36px;
+            color: #444;
+            cursor: pointer;
+            z-index: 1001;
+            transition: color 0.3s ease;
+        }
+        #closeBtn:hover {
+            color: #000000 !important;
+        }
+    </style>
+    <script>
+        const galleryImages = [
+            '/Users/malachihernandez/Desktop/S&P Images/MOONEY1.jpeg',
+            '/Users/malachihernandez/Desktop/S&P Images/MOONEY2.jpeg',
+            '/Users/malachihernandez/Desktop/S&P Images/MOONEY3.jpeg',
+            '/Users/malachihernandez/Desktop/S&P Images/MOONEY4.jpeg',
+            '/Users/malachihernandez/Desktop/S&P Images/MOONEY5.jpeg',
+            '/Users/malachihernandez/Desktop/S&P Images/MOONEY6.jpeg',
+            '/Users/malachihernandez/Desktop/S&P Images/MOONEY7.jpeg'
+        ];
+        let currentImageIndex = 0;
+
+        function loadGalleryImages() {
+            const mainImage = document.getElementById('mainImage');
+            const thumbnailContainer = document.getElementById('thumbnailContainer');
+            
+            mainImage.src = galleryImages[currentImageIndex];
+            
+            thumbnailContainer.innerHTML = '';
+            galleryImages.forEach((src, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = src;
+                thumbnail.classList.add('thumbnail');
+                if (index === currentImageIndex) thumbnail.classList.add('active');
+                thumbnail.addEventListener('click', () => {
+                    currentImageIndex = index;
+                    updateGallery();
+                });
+                thumbnailContainer.appendChild(thumbnail);
+            });
+        }
+
+        function updateGallery() {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.style.opacity = '0';
+            setTimeout(() => {
+                mainImage.src = galleryImages[currentImageIndex];
+                mainImage.style.opacity = '1';
+            }, 300);
+            
+            document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+                thumb.classList.toggle('active', index === currentImageIndex);
+            });
+        }
+
+        document.getElementById('galleryCard').addEventListener('click', openOverlay);
+        document.getElementById('viewGalleryBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            openOverlay();
+        });
+        document.getElementById('closeBtn').addEventListener('click', closeOverlay);
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateGallery();
+        });
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            updateGallery();
+        });
+
+        function openOverlay() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.display = 'block';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+            }, 10);
+            document.body.classList.add('overlay-open');
+            loadGalleryImages();
+        }
+
+        function closeOverlay() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+            document.body.classList.remove('overlay-open');
+        }
+    </script>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <a href="sphome.html" title="Home">
+                    <img src="/Users/malachihernandez/Desktop/S&P Images/GOLDLOGO.png" alt="S&P Builders Logo" class="footer-logo">
+                </a>
+                <a href="https://www.instagram.com/sandpbuilders/" class="footer-instagram">Follow us on Instagram!</a>
+            </div>
+            <ul class="footer-menu">
+                <li><a href="sphome.html#home">Home</a></li>
+                <li><a href="sphome.html#build">Build With Us</a></li>
+                <li><a href="sphome.html#properties">Available Properties</a></li>
+                <li><a href="sphome.html#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2024, S&P Builders, LLC. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Function to update active navigation link
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 60) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Call the function on scroll and on page load
+        window.addEventListener('scroll', updateActiveNavLink);
+        window.addEventListener('load', updateActiveNavLink);
+    </script>
+</body>
+</html>
