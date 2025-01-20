@@ -144,11 +144,20 @@
     </header>
 
     <main style="background-color: #f5f5f7; padding: 120px 20px 40px;">
-        <div id="galleryCard" style="background-color: white; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden; display: flex; max-width: 1200px; margin: 0 auto; height: 400px; transition: transform 0.5s ease; cursor: pointer;">
+        <div id="galleryCard" style="background-color: white; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden; display: flex; max-width: 1200px; margin: 0 auto 40px; height: 400px; transition: transform 0.5s ease; cursor: pointer;">
             <div style="flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <h2 style="font-size: 28px; font-weight: bold; color: #000000; margin-bottom: 5px; text-align: center;">624 Mooney Dr.</h2>
                 <p style="font-size: 18px; color: #1d1d1f; margin-bottom: 30px; text-align: center;">Saginaw, TX</p>
                 <a href="#" id="viewGalleryBtn" style="display: inline-block; padding: 10px 20px; border: 2px solid #B59959; border-radius: 25px; text-decoration: none; font-weight: bold;">View Gallery</a>
+            </div>
+            <div style="flex: 1; background-image: url('MOONEY.png'); background-size: cover; background-position: center;"></div>
+        </div>
+
+        <div id="galleryCard2" style="background-color: white; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden; display: flex; max-width: 1200px; margin: 0 auto; height: 400px; transition: transform 0.5s ease; cursor: pointer;">
+            <div style="flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <h2 style="font-size: 28px; font-weight: bold; color: #000000; margin-bottom: 5px; text-align: center;">1029 Silver Sage Trl.</h2>
+                <p style="font-size: 18px; color: #1d1d1f; margin-bottom: 30px; text-align: center;">Weatherford, TX</p>
+                <a href="#" id="viewGalleryBtn2" style="display: inline-block; padding: 10px 20px; border: 2px solid #B59959; border-radius: 25px; text-decoration: none; font-weight: bold;">View Gallery</a>
             </div>
             <div style="flex: 1; background-image: url('MOONEY.png'); background-size: cover; background-position: center;"></div>
         </div>
@@ -168,15 +177,31 @@
             </div>
         </div>
     </div>
+
+    <div id="overlay2" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(211, 211, 211, 0.95); z-index: 1000; overflow: auto; opacity: 0; transition: opacity 0.3s ease;">
+        <button id="closeBtn2" style="position: fixed; top: 20px; left: 20px; background: none; border: none; font-size: 36px; color: #444; cursor: pointer; z-index: 1001; transition: color 0.3s ease;">✕</button>
+        <div id="galleryContainer2" style="display: flex; flex-direction: column; height: 100%; padding: 20px; box-sizing: border-box;">
+            <h2 style="font-size: 28px; font-weight: bold; color: #000000; margin-bottom: 5px; text-align: center; margin-top: 40px;">1029 Silver Sage Trl.</h2>
+            <p style="font-size: 18px; color: #444444; margin-bottom: 20px; text-align: center;">Weatherford, TX</p>
+            <div id="mainImageContainer2" style="flex: 1; display: flex; justify-content: center; align-items: center; position: relative; margin-bottom: 20px;">
+                <button id="prevBtn2" class="nav-btn" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%);">&#10094;</button>
+                <img id="mainImage2" src="" alt="Main gallery image" style="max-width: 95%; max-height: calc(100vh - 300px); object-fit: contain; transition: opacity 0.3s ease;">
+                <button id="nextBtn2" class="nav-btn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">&#10095;</button>
+            </div>
+            <div id="thumbnailContainer2" style="display: flex; justify-content: center; align-items: center; height: 100px; overflow-x: auto; margin-bottom: 20px;">
+                <!-- Thumbnails will be dynamically added here -->
+            </div>
+        </div>
+    </div>
     <style>
         main > div:hover {
             transform: scale(1.025);
         }
-        #viewGalleryBtn {
+        #viewGalleryBtn, #viewGalleryBtn2 {
             color: #000000;
             transition: color 0.3s ease;
         }
-        #viewGalleryBtn:hover {
+        #viewGalleryBtn:hover, #viewGalleryBtn2:hover {
             color: #B59959;
         }
         body.overlay-open {
@@ -205,7 +230,7 @@
         .thumbnail.active {
             filter: brightness(1);
         }
-        #closeBtn {
+        #closeBtn, #closeBtn2 {
             position: fixed;
             top: 20px;
             left: 20px;
@@ -217,7 +242,7 @@
             z-index: 1001;
             transition: color 0.3s ease;
         }
-        #closeBtn:hover {
+        #closeBtn:hover, #closeBtn2:hover {
             color: #000000 !important;
         }
     </style>
@@ -231,7 +256,17 @@
             'MOONEY6.jpeg',
             'MOONEY7.jpeg'
         ];
+
+        const galleryImages2 = [
+            'SILVER1.jpg',
+            'SILVER2.jpg',
+            'SILVER3.jpg',
+            'SILVER4.jpg',
+            'SILVER5.jpg',
+            'SILVER6.jpg'
+        ];
         let currentImageIndex = 0;
+        let currentImageIndex2 = 0;
 
         function loadGalleryImages() {
             const mainImage = document.getElementById('mainImage');
@@ -253,6 +288,26 @@
             });
         }
 
+        function loadGalleryImages2() {
+            const mainImage = document.getElementById('mainImage2');
+            const thumbnailContainer = document.getElementById('thumbnailContainer2');
+            
+            mainImage.src = galleryImages2[currentImageIndex2];
+            
+            thumbnailContainer.innerHTML = '';
+            galleryImages2.forEach((src, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = src;
+                thumbnail.classList.add('thumbnail');
+                if (index === currentImageIndex2) thumbnail.classList.add('active');
+                thumbnail.addEventListener('click', () => {
+                    currentImageIndex2 = index;
+                    updateGallery2();
+                });
+                thumbnailContainer.appendChild(thumbnail);
+            });
+        }
+
         function updateGallery() {
             const mainImage = document.getElementById('mainImage');
             mainImage.style.opacity = '0';
@@ -261,17 +316,36 @@
                 mainImage.style.opacity = '1';
             }, 300);
             
-            document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+            document.querySelectorAll('#thumbnailContainer .thumbnail').forEach((thumb, index) => {
                 thumb.classList.toggle('active', index === currentImageIndex);
             });
         }
 
+        function updateGallery2() {
+            const mainImage = document.getElementById('mainImage2');
+            mainImage.style.opacity = '0';
+            setTimeout(() => {
+                mainImage.src = galleryImages2[currentImageIndex2];
+                mainImage.style.opacity = '1';
+            }, 300);
+            
+            document.querySelectorAll('#thumbnailContainer2 .thumbnail').forEach((thumb, index) => {
+                thumb.classList.toggle('active', index === currentImageIndex2);
+            });
+        }
+
         document.getElementById('galleryCard').addEventListener('click', openOverlay);
+        document.getElementById('galleryCard2').addEventListener('click', openOverlay2);
         document.getElementById('viewGalleryBtn').addEventListener('click', function(e) {
             e.stopPropagation();
             openOverlay();
         });
+        document.getElementById('viewGalleryBtn2').addEventListener('click', function(e) {
+            e.stopPropagation();
+            openOverlay2();
+        });
         document.getElementById('closeBtn').addEventListener('click', closeOverlay);
+        document.getElementById('closeBtn2').addEventListener('click', closeOverlay2);
         document.getElementById('prevBtn').addEventListener('click', () => {
             currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
             updateGallery();
@@ -279,6 +353,14 @@
         document.getElementById('nextBtn').addEventListener('click', () => {
             currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
             updateGallery();
+        });
+        document.getElementById('prevBtn2').addEventListener('click', () => {
+            currentImageIndex2 = (currentImageIndex2 - 1 + galleryImages2.length) % galleryImages2.length;
+            updateGallery2();
+        });
+        document.getElementById('nextBtn2').addEventListener('click', () => {
+            currentImageIndex2 = (currentImageIndex2 + 1) % galleryImages2.length;
+            updateGallery2();
         });
 
         function openOverlay() {
@@ -291,8 +373,27 @@
             loadGalleryImages();
         }
 
+        function openOverlay2() {
+            const overlay = document.getElementById('overlay2');
+            overlay.style.display = 'block';
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+            }, 10);
+            document.body.classList.add('overlay-open');
+            loadGalleryImages2();
+        }
+
         function closeOverlay() {
             const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+            document.body.classList.remove('overlay-open');
+        }
+
+        function closeOverlay2() {
+            const overlay = document.getElementById('overlay2');
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
